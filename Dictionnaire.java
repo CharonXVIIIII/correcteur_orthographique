@@ -5,13 +5,13 @@ import java.nio.file.*;
 import java.util.List;
 
 public class Dictionnaire{
-    HashMap<String, String> dico = new HashMap<>();
+    HashMap<String, List<String>> dico = new HashMap<>();
 
     public Dictionnaire(String file) throws IOException{
         List<String> lines = Files.readAllLines(Paths.get(file));
         for(String line : lines){
             String[] words = line.split(" ");
-            dico.put(words[0], words[0]);
+            dico.put(words[0], createTrigramme(words[0]));
         }
     } 
 
