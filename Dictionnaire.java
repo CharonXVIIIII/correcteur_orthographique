@@ -16,6 +16,12 @@ public class Dictionnaire{
 
     private List<String> createTrigramme(String string){ // exemple : <patate> -> <pa, pat, ata, tat, ate, te>
         List<String> trigramme = new ArrayList<>();
-        
+        String start = "<";
+        String end = ">";
+        string = start + string + end;
+        for(int i = 0; i < string.length() - 2; i++){
+            trigramme.add(string.substring(i, i+3));
+        }
+        return trigramme;
     }
 }
