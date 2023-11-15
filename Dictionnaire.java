@@ -16,6 +16,9 @@ public class Dictionnaire{
 
     private List<String> createTrigramme(String string){
         List<String> trigramme = new ArrayList<>();
+        String start = "<";
+        String end = ">";
+        string = start + string + end;
         
         return 
     }
