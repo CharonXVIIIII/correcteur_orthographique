@@ -6,7 +6,7 @@ import java.util.List;
 //import java.util.stream.Collectors;
 
 public class Dictionnaire{
-    HashMap<List<String>, String> dico = new HashMap<>();
+    HashMap<String, List<String>> dico = new HashMap<>();
 
     
     public Dictionnaire(String file) throws IOException{
@@ -14,7 +14,12 @@ public class Dictionnaire{
         List<String> lines = Files.readAllLines(Paths.get(file));
         for(String line : lines){
             String[] words = line.split(" ");
-            dico.put(createTrigramme(words[0]), words[0]);
+            List<String> trigrammeList= createTrigramme(line);
+            for(String tri : trigrammeList){
+                if(dico.get(tri)){
+
+                }
+            }
         }
     } 
 
@@ -34,7 +39,6 @@ public class Dictionnaire{
     public static void main(String[] args) throws IOException{
         Dictionnaire dico = new Dictionnaire("minidico.txt");
         System.out.println(dico.dico);
-        System.out.println(dico.createTrigramme("patate"));
     }
 
 
