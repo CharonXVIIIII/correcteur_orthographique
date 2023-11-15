@@ -8,6 +8,7 @@ import java.util.List;
 public class Dictionnaire{
     HashMap<List<String>, String> dico = new HashMap<>();
 
+    
     public Dictionnaire(String file) throws IOException{
        // List<String> lines = Files.lines(Path.of(file)).collect(Collectors.toList());
         List<String> lines = Files.readAllLines(Paths.get(file));
