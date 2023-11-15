@@ -14,12 +14,8 @@ public class Dictionnaire{
         }
     }
 
-    private List<String> createTrigramme(String string){
+    private List<String> createTrigramme(String string){ // exemple : <patate> -> <pa, pat, ata, tat, ate, te>
         List<String> trigramme = new ArrayList<>();
-        String start = "<";
-        String end = ">";
-        string = start + string + end;
         
-        return 
     }
 }
