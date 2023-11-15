@@ -6,22 +6,32 @@ import java.util.List;
 //import java.util.stream.Collectors;
 
 public class Dictionnaire{
-    HashMap<String, List<String>> dico = new HashMap<>();
+    private final HashMap<String, List<String>> dico = new HashMap<>();
 
     
     public Dictionnaire(String file) throws IOException{
-       // List<String> lines = Files.lines(Path.of(file)).collect(Collectors.toList());
         List<String> lines = Files.readAllLines(Paths.get(file));
-        for(String line : lines){
-            String[] words = line.split(" ");
-            List<String> trigrammeList= createTrigramme(line);
-            for(String tri : trigrammeList){
-                if(dico.get(tri)){
+        for(String word : lines){
+            List<String> trigrammeList= createTrigramme(word);
+            List<String> newValuesList = new ArrayList<String>();
+            newValuesList.add(word);
 
+            for(String tri : trigrammeList){
+                if( ! dico.containsKey(tri)){
+                    System.out.println("Je ne possède pas la clé : " + tri);
+                    dico.put(tri, newValuesList);
                 }
+                else{
+                    if( ! dico.get(tri).contains(word)){
+                        newValuesList.add(word);
+                        dico.put(tri, newValuesList);
+                    }
+                }
+                
             }
         }
-    } 
+    
+    }
 
 
     private List<String> createTrigramme(String string){ // exemple : <patate> -> <pa, pat, ata, tat, ate, te>
