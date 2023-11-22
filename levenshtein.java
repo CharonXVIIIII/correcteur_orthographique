@@ -12,7 +12,7 @@ public class levenshtein {
         this.result = new String[this.initialWord.length()+1][this.correctWord.length()+1];   
     }
 
-    public String editleght(){
+    public String editlenght(){
         int cost;
 
         for (int row = 0; row <= this.initialWord.length(); row++) {
