@@ -42,14 +42,25 @@ public class Dictionnaire{
     }
 
     private List<String> wordWithWrongSyntaxe(String word){
+        HashMap<String, Integer> wordAndDico = new HashMap<>();
         List<String> trigrammeWord = createTrigramme(word);
         List<String> listWordComparable = new ArrayList<>();
+
         for (String tri : trigrammeWord) {
             listWordComparable.addAll(dico.get(tri));
         }
+        for (String wordString : listWordComparable) {
+            if( ! wordAndDico.containsKey(wordString)){
+                wordAndDico.put(wordString, 1);
+            }
+            else{
+                int nb = wordAndDico.get(wordString);
+                wordAndDico.replace(wordString, nb+1);
+            }
+        }
         for (String mot : listWordComparable) {
             levenshtein lev = new levenshtein(word, mot);
-            System.out.println(lev.editlenght());
+            System.out.println(lev.editlength());
         }
     
 
