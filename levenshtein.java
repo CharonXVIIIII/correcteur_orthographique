@@ -14,7 +14,6 @@ public class levenshtein {
 
     public String editlenght(){
         int cost;
-
         for (int row = 0; row <= this.initialWord.length(); row++) {
             for (int col = 0; col <= this.correctWord.length(); col++) {
                 if (row == 0) {

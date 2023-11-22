@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
 //import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class Dictionnaire{
     private final HashMap<String, List<String>> dico = new HashMap<>();
@@ -57,7 +58,10 @@ public class Dictionnaire{
 
     public static void main(String[] args) throws IOException{
         Dictionnaire dico = new Dictionnaire("minidico.txt");
-        System.out.println(dico.dico);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Entrez un mot : ");
+        String word = sc.nextLine();
+        System.out.println(word);
     }
 
 
