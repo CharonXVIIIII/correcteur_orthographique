@@ -13,19 +13,16 @@ public class Dictionnaire{
         List<String> lines = Files.readAllLines(Paths.get(file));
         for(String word : lines){
             List<String> trigrammeList= createTrigramme(word);
-            List<String> newValuesList = new ArrayList<String>();
-            newValuesList.add(word);
 
             for(String tri : trigrammeList){
                 if( ! dico.containsKey(tri)){
+                    List<String> newValuesList = new ArrayList<String>();
+                    newValuesList.add(word);
                     System.out.println("Je ne possède pas la clé : " + tri);
                     dico.put(tri, newValuesList);
                 }
                 else{
-                    if( ! dico.get(tri).contains(word)){
-                        newValuesList.add(word);
-                        dico.put(tri, newValuesList);
-                    }
+                    dico.get(tri).add(word);
                 }
                 
             }
@@ -43,6 +40,10 @@ public class Dictionnaire{
             trigramme.add(string.substring(i, i+3));
         }
         return trigramme;
+    }
+
+    private List<String> wordWithWrongSyntaxe(String word){
+        return null;
     }
 
 
