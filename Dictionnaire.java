@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
+import java.util.Map;
 //import java.util.stream.Collectors;
 import java.util.Scanner;
 
@@ -19,7 +20,6 @@ public class Dictionnaire{
                 if( ! dico.containsKey(tri)){
                     List<String> newValuesList = new ArrayList<String>();
                     newValuesList.add(word);
-                    System.out.println("Je ne possède pas la clé : " + tri);
                     dico.put(tri, newValuesList);
                 }
                 else{
@@ -41,27 +41,31 @@ public class Dictionnaire{
         return trigramme;
     }
 
-    private List<String> wordWithWrongSyntaxe(String word){
-        List<String> trigrammeWord = createTrigramme(word);
-        List<String> listWordComparable = new ArrayList<>();
-        for (String tri : trigrammeWord) {
-            listWordComparable.addAll(dico.get(tri));
-        }
-        for (String mot : listWordComparable) {
-            levenshtein lev = new levenshtein(word, mot);
-            System.out.println(lev.editlenght());
-        }
-    
+    private Map<String,Integer> wordsWithCommonTrigramByFrequency(String word){
+        HashMap<String, Integer> occurenceCountMap = new HashMap<>();
+        List<String> trigrammes = createTrigramme(word);
+        List<String> wordsWithCommonTrigram = new ArrayList<>();
+        for (String tri : trigrammes) {
+            wordsWithCommonTrigram.addAll(dico.get(tri));
+        } 
 
-        return null;
+        for (String mot : wordsWithCommonTrigram) {
+            int nbOccurences = occurenceCountMap.containsKey(mot)? occurenceCountMap.get(mot) + 1: 1;
+            occurenceCountMap.put(mot, nbOccurences);
+        }
+        return occurenceCountMap;
     }
 
-    public static void main(String[] args) throws IOException{
-        Dictionnaire dico = new Dictionnaire("minidico.txt");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Entrez un mot : ");
-        String word = sc.nextLine();
-        System.out.println(word);
+    
+
+    public static void main(String[] args) {
+        Chrono.chrono(() -> {
+            try
+              Dictionnaire dico = new Dictionnaire("dico.txt");
+            catch (IOException e) {
+                System.out.println("Cannot read file");
+            }  
+        });        
     }
 
 
