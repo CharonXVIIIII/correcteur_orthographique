@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.List;
-import java.util.Map;
 //import java.util.stream.Collectors;
-import java.util.Scanner;
+
 
 public class Dictionnaire{
     private final HashMap<String, List<String>> dico = new HashMap<>();
@@ -14,7 +11,7 @@ public class Dictionnaire{
     public Dictionnaire(String file) throws IOException{
         List<String> lines = Files.readAllLines(Paths.get(file));
         for(String word : lines){
-            List<String> trigrammeList= createTrigramme(word);
+            List<String> trigrammeList = createTrigramme(word);
 
             for(String tri : trigrammeList){
                 if( ! dico.containsKey(tri)){
@@ -46,7 +43,7 @@ public class Dictionnaire{
         List<String> trigrammes = createTrigramme(word);
         List<String> wordsWithCommonTrigram = new ArrayList<>();
         for (String tri : trigrammes) {
-            wordsWithCommonTrigram.addAll(dico.get(tri));
+            wordsWithCommonTrigram.addAll(dico.getOrDefault(tri,List.of()));
         } 
 
         for (String mot : wordsWithCommonTrigram) {
@@ -56,17 +53,31 @@ public class Dictionnaire{
         return occurenceCountMap;
     }
 
-    
+    private List<String> occurencesFrequencyMap(String word){
+        Map<String, Integer> ocurencesFrequency = wordsWithCommonTrigramByFrequency(word);
+        List<String> words = new ArrayList<>(ocurencesFrequency.keySet());
+        words.sort(Comparator.comparingInt(ocurencesFrequency::get));
 
-    public static void main(String[] args) {
-        Chrono.chrono(() -> {
-            try
-              Dictionnaire dico = new Dictionnaire("dico.txt");
-            catch (IOException e) {
-                System.out.println("Cannot read file");
-            }  
-        });        
+        List<String> closeWords = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            if (words.size() <= i) break;
+            closeWords.add(words.get(i));
+        }
+        return closeWords;
     }
 
+    public String closestWord(String word){
+        List<String> closeWord = occurencesFrequencyMap(word);
+        String closestWord = null;
+        int minChange = Integer.MAX_VALUE;
+        for (String compareWord : closeWord ){
+            levenshtein lev = new levenshtein(word, compareWord);
+            if(lev.editlength() < minChange){
+                minChange = lev.editlength();
+                closestWord = compareWord;
+            }
+        }
+        return closestWord;
+    }
 
 }
