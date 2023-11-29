@@ -15,13 +15,17 @@ public class Main {
             List<String> correctWord = Files.readAllLines(Paths.get("minidico.txt"));
             dico = new Dictionnaire("dico.txt");
             for (int i = 0; i < lines.size(); i++) {
-                String correctedWord = dico.closestWord(lines.get(i));
+                String incorrectWord = lines.get(i);
+                String correctedWord = dico.closestWord(incorrectWord);
                 String expectedWord = correctWord.get(i);
                 if(correctedWord.equals(expectedWord)){
                     numberOfCorrectWord++;
                 }
                 else{
-                    System.out.println("Correction obtenue : " + correctedWord +  " vs mot attendu : " + expectedWord);
+                    System.out.println(incorrectWord
+                            + " correction obtenue : " + correctedWord +
+                            " vs mot attendu : " + expectedWord
+                    );
                 }
             }
 

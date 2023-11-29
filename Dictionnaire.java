@@ -56,7 +56,7 @@ public class Dictionnaire{
     private List<String> occurencesFrequencyMap(String word){
         Map<String, Integer> ocurencesFrequency = wordsWithCommonTrigramByFrequency(word);
         List<String> words = new ArrayList<>(ocurencesFrequency.keySet());
-        words.sort(Comparator.comparingInt(ocurencesFrequency::get));
+        words.sort(Comparator.comparingInt(ocurencesFrequency::get).reversed());
 
         List<String> closeWords = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
